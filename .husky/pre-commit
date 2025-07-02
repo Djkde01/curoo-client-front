@@ -1,0 +1,32 @@
+echo "Running pre-commit hook..."
+
+# Check if there are any staged files
+if git diff --cached --quiet; then
+  echo "No staged files to commit."
+  exit 0
+fi
+
+# Run ESLint on staged files
+echo "Running ESLint on staged files..."
+if ! npx eslint . --ext .js,.ts,.html --fix; then
+  echo "ESLint found issues. Please fix them before committing."
+  exit 1
+fi
+
+# Run Prettier on staged files
+echo "Running Prettier on staged files..."
+if ! npx prettier --write .; then
+  echo "Prettier found issues. Please fix them before committing."
+  exit 1
+fi
+
+# Stage the changes made by ESLint and Prettier
+echo "Staging changes made by ESLint and Prettier..."
+git add .
+if [ $? -ne 0 ]; then
+  echo "Failed to stage changes."
+  exit 1
+fi
+
+echo "Pre-commit hook completed successfully."
+exit 0

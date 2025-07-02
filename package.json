@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "lint-fix": "ng lint --fix",
-    "format": "prettier --write \"src/**/*.{ts,html,css}\""
+    "format": "prettier --write \"src/**/*.{ts,html,css}\"",
+    "prepare": "husky install"
   },
   "prettier": {
     "overrides": [
@@ -45,6 +46,7 @@
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
+    "husky": "^8.0.0",
     "jasmine-core": "~5.7.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
