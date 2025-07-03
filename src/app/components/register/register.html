@@ -1,0 +1,155 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-gray-50 p-5 font-sans lg:bg-gradient-primary"
+>
+  <div
+    class="bg-white rounded-2xl px-6 py-8 w-full max-w-sm shadow-lg md:px-10 md:py-12 md:max-w-md lg:shadow-2xl"
+  >
+    <div class="text-center mb-10">
+      <h1 class="text-base font-extrabold text-gray-800 mb-6 tracking-wider">
+        Register
+      </h1>
+      <h2
+        class="text-3xl font-extrabold text-gray-900 leading-tight md:text-4xl"
+      >
+        Create Your Account
+      </h2>
+    </div>
+
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-5"
+    >
+      <!-- First Name and Surname Row -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="flex flex-col gap-2">
+          <input
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            placeholder="First Name"
+            class="h-14 border-0 rounded-xl bg-gray-100 px-4 text-base text-gray-900 transition-all duration-200 outline-none placeholder:text-gray-400 placeholder:font-normal focus:bg-primary-50 focus:ring-1 focus:ring-primary-500 md:h-15 md:text-lg"
+            [class]="
+              getFieldError('firstName')
+                ? '!bg-red-50 !ring-1 !ring-red-500'
+                : ''
+            "
+          />
+          @if (getFieldError("firstName")) {
+            <div class="text-red-500 text-sm font-medium mt-1">
+              {{ getFieldError("firstName") }}
+            </div>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <input
+            id="surname"
+            type="text"
+            formControlName="surname"
+            placeholder="Surname"
+            class="h-14 border-0 rounded-xl bg-gray-100 px-4 text-base text-gray-900 transition-all duration-200 outline-none placeholder:text-gray-400 placeholder:font-normal focus:bg-primary-50 focus:ring-1 focus:ring-primary-500 md:h-15 md:text-lg"
+            [class]="
+              getFieldError('surname') ? '!bg-red-50 !ring-1 !ring-red-500' : ''
+            "
+          />
+          @if (getFieldError("surname")) {
+            <div class="text-red-500 text-sm font-medium mt-1">
+              {{ getFieldError("surname") }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Mobile Phone -->
+      <div class="flex flex-col gap-2">
+        <input
+          id="mobilePhone"
+          type="tel"
+          formControlName="mobilePhone"
+          placeholder="Mobile Phone (Optional)"
+          class="h-14 border-0 rounded-xl bg-gray-100 px-4 text-base text-gray-900 transition-all duration-200 outline-none placeholder:text-gray-400 placeholder:font-normal focus:bg-primary-50 focus:ring-1 focus:ring-primary-500 md:h-15 md:text-lg"
+          [class]="
+            getFieldError('mobilePhone')
+              ? '!bg-red-50 !ring-1 !ring-red-500'
+              : ''
+          "
+        />
+        @if (getFieldError("mobilePhone")) {
+          <div class="text-red-500 text-sm font-medium mt-1">
+            {{ getFieldError("mobilePhone") }}
+          </div>
+        }
+      </div>
+
+      <!-- Email Address -->
+      <div class="flex flex-col gap-2">
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Email Address"
+          class="h-14 border-0 rounded-xl bg-gray-100 px-4 text-base text-gray-900 transition-all duration-200 outline-none placeholder:text-gray-400 placeholder:font-normal focus:bg-primary-50 focus:ring-1 focus:ring-primary-500 md:h-15 md:text-lg"
+          [class]="
+            getFieldError('email') ? '!bg-red-50 !ring-1 !ring-red-500' : ''
+          "
+        />
+        @if (getFieldError("email")) {
+          <div class="text-red-500 text-sm font-medium mt-1">
+            {{ getFieldError("email") }}
+          </div>
+        }
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col gap-2">
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          class="h-14 border-0 rounded-xl bg-gray-100 px-4 text-base text-gray-900 transition-all duration-200 outline-none placeholder:text-gray-400 placeholder:font-normal focus:bg-primary-50 focus:ring-1 focus:ring-primary-500 md:h-15 md:text-lg"
+          [class]="
+            getFieldError('password') ? '!bg-red-50 !ring-1 !ring-red-500' : ''
+          "
+        />
+        @if (getFieldError("password")) {
+          <div class="text-red-500 text-sm font-medium mt-1">
+            {{ getFieldError("password") }}
+          </div>
+        }
+      </div>
+
+      @if (errorMessage()) {
+        <div
+          class="text-red-500 text-sm font-medium text-center p-3 bg-red-50 rounded-lg my-2"
+        >
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <!-- Create Account Button -->
+      <button
+        type="submit"
+        [disabled]="registerForm.invalid || isLoading()"
+        class="h-14 bg-primary-500 text-white border-0 rounded-full text-base font-semibold cursor-pointer transition-all duration-200 mt-4 hover:bg-primary-600 hover:-translate-y-0.5 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:transform-none md:h-15 md:text-lg"
+      >
+        @if (isLoading()) {
+          <span>Creating Account...</span>
+        } @else {
+          <span>Create Account</span>
+        }
+      </button>
+
+      <!-- Terms and Conditions -->
+      <div class="text-center mt-4">
+        <p class="text-sm text-gray-500">
+          By signing up, you agree to our
+          <a href="#" class="text-primary-500 hover:text-primary-600">
+            Terms & Conditions
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
