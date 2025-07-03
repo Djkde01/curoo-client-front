@@ -1,0 +1,56 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-gradient-primary p-5 font-sans"
+>
+  <div
+    class="bg-white rounded-2xl px-8 py-12 w-full max-w-sm text-center shadow-2xl md:px-10 md:py-16 md:max-w-md"
+  >
+    <!-- Header Text -->
+    <div class="mb-8">
+      <h1 class="text-base font-medium text-gray-600 mb-6 tracking-wider">
+        Registration Successful
+      </h1>
+      <h2
+        class="text-2xl font-bold text-gray-900 leading-tight mb-2 md:text-3xl"
+      >
+        Congratulations,
+      </h2>
+      <h2 class="text-2xl font-bold text-gray-900 leading-tight md:text-3xl">
+        your account has
+      </h2>
+      <h2 class="text-2xl font-bold text-gray-900 leading-tight md:text-3xl">
+        been created!
+      </h2>
+    </div>
+
+    <!-- Profile Image -->
+    <div class="mb-10">
+      <div
+        class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden md:w-40 md:h-40"
+      >
+        <!-- Placeholder for user image - in a real app this would be an actual profile photo -->
+        <div
+          class="w-full h-full bg-gray-300 rounded-full flex items-center justify-center"
+        >
+          <svg
+            class="w-16 h-16 text-gray-500 md:w-20 md:h-20"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Go to Dashboard Button -->
+    <button
+      type="button"
+      (click)="goToDashboard()"
+      class="w-full h-14 bg-primary-500 text-white border-0 rounded-full text-base font-semibold cursor-pointer transition-all duration-200 hover:bg-primary-600 hover:-translate-y-0.5 md:h-15 md:text-lg"
+    >
+      Go to Dashboard
+    </button>
+  </div>
+</div>
