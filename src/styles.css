@@ -38,7 +38,8 @@
   /* Custom background gradients */
   --background-image-gradient-primary: linear-gradient(
     135deg,
-    #667eea 0%,
+    #fff 0%,
+    #b4a8ff 50%,
     #764ba2 100%
   );
 }
