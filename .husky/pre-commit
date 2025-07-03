@@ -20,13 +20,5 @@ if ! npx prettier --write .; then
   exit 1
 fi
 
-# Stage the changes made by ESLint and Prettier
-echo "Staging changes made by ESLint and Prettier..."
-git add .
-if [ $? -ne 0 ]; then
-  echo "Failed to stage changes."
-  exit 1
-fi
-
 echo "Pre-commit hook completed successfully."
 exit 0
