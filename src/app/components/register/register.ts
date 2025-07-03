@@ -87,7 +87,7 @@ export class RegisterComponent {
         const formData = this.registerForm.value as RegisterData;
         const success = this.authService.register(formData);
         if (success) {
-          await this.router.navigate(['/dashboard']);
+          await this.router.navigate(['/registration-success']);
         } else {
           this.errorMessage.set('Registration failed. Please try again.');
         }

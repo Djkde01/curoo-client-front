@@ -86,4 +86,8 @@ export class LoginComponent {
       });
     }
   }
+
+  protected async goToRegister(): Promise<void> {
+    await this.router.navigate(['/register']);
+  }
 }
