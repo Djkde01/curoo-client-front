@@ -1,22 +1,39 @@
-<div
-  class="min-h-screen flex items-center justify-center bg-gradient-primary p-5 font-sans"
->
-  <div
-    class="bg-white rounded-2xl px-8 py-12 text-center max-w-sm w-full shadow-2xl"
-  >
-    <div class="text-6xl mb-6 block">🎉</div>
-    <h1 class="text-3xl font-bold text-gray-900 mb-4 leading-tight">
-      You're registered!
-    </h1>
-    <p class="text-base text-gray-600 mb-8 leading-relaxed">
-      Welcome! You have successfully logged into your account.
-    </p>
-    <button
-      type="button"
-      class="bg-red-500 text-white border-0 rounded-xl px-6 py-3 text-base font-semibold cursor-pointer transition-all duration-200 hover:bg-red-600 hover:-translate-y-0.5"
-      (click)="logout()"
-    >
-      Logout
-    </button>
-  </div>
+<div class="min-h-screen bg-gray-50 font-sans">
+  <!-- Header -->
+  <app-dashboard-header
+    [user]="user()"
+    (logout)="handleLogout()"
+  ></app-dashboard-header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Actions Bar -->
+    <app-dashboard-actions
+      (addClient)="handleAddClient()"
+    ></app-dashboard-actions>
+
+    <!-- Clients List -->
+    <app-client-list
+      [clients]="clients()"
+      (editClient)="handleEditClient($event)"
+      (deleteClient)="handleDeleteClient($event)"
+    ></app-client-list>
+  </main>
+
+  <!-- Create/Edit Modal -->
+  @if (showCreateForm()) {
+    <app-client-form
+      [editingClient]="editingClient()"
+      (save)="handleSaveClient($event)"
+      (formClose)="handleFormClose()"
+    ></app-client-form>
+  }
+
+  <!-- Delete Confirmation Modal -->
+  @if (showDeleteConfirm()) {
+    <app-delete-confirmation-modal
+      (confirm)="handleDeleteConfirm()"
+      (dismiss)="handleDeleteCancel()"
+    ></app-delete-confirmation-modal>
+  }
 </div>
