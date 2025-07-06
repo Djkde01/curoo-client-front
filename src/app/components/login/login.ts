@@ -68,15 +68,36 @@ export class LoginComponent {
 
       try {
         const { username, password } = this.loginForm.value;
-        const loginSuccess = this.authService.login(username, password);
-        if (loginSuccess) {
-          await this.router.navigate(['/dashboard']);
-        } else {
-          this.errorMessage.set('Invalid username or password');
-        }
-      } catch {
-        this.errorMessage.set('An error occurred during login');
-      } finally {
+        const loginRequest = { email: username, password };
+
+        this.authService.login(loginRequest).subscribe({
+          next: (success) => {
+            if (success) {
+              this.router.navigate(['/dashboard']);
+            } else {
+              this.errorMessage.set('Login failed');
+            }
+            this.isLoading.set(false);
+          },
+          error: (error) => {
+            console.error('Login error:', error);
+            if (error.status === 401) {
+              this.errorMessage.set('Invalid username or password');
+            } else if (error.status === 0) {
+              this.errorMessage.set(
+                'Unable to connect to server. Please check your connection.',
+              );
+            } else {
+              this.errorMessage.set(
+                'An error occurred during login. Please try again.',
+              );
+            }
+            this.isLoading.set(false);
+          },
+        });
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        this.errorMessage.set('An unexpected error occurred');
         this.isLoading.set(false);
       }
     } else {

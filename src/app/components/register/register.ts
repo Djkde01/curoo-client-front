@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
 
 export interface RegisterData {
-  firstName: string;
+  name: string;
   surname: string;
   mobilePhone?: string;
   email: string;
@@ -39,7 +39,7 @@ export class RegisterComponent {
 
   constructor() {
     this.registerForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      name: ['', [Validators.required, Validators.minLength(2)]],
       surname: ['', [Validators.required, Validators.minLength(2)]],
       mobilePhone: ['', [Validators.pattern(/^\+?[\d\s\-()]+$/)]],
       email: ['', [Validators.required, Validators.email]],
@@ -69,7 +69,7 @@ export class RegisterComponent {
 
   private getFieldLabel(fieldName: string): string {
     const labels: Record<string, string> = {
-      firstName: 'First name',
+      name: 'Name',
       surname: 'Surname',
       mobilePhone: 'Mobile phone',
       email: 'Email address',
@@ -85,15 +85,44 @@ export class RegisterComponent {
 
       try {
         const formData = this.registerForm.value as RegisterData;
-        const success = this.authService.register(formData);
-        if (success) {
-          await this.router.navigate(['/registration-success']);
-        } else {
-          this.errorMessage.set('Registration failed. Please try again.');
-        }
-      } catch {
-        this.errorMessage.set('An error occurred during registration');
-      } finally {
+        const registerRequest = {
+          email: formData.email,
+          password: formData.password,
+          name: formData.name,
+          surname: formData.surname,
+          mobilePhone: formData.mobilePhone,
+        };
+
+        this.authService.register(registerRequest).subscribe({
+          next: (success) => {
+            if (success) {
+              this.router.navigate(['/registration-success']);
+            } else {
+              this.errorMessage.set('Registration failed. Please try again.');
+            }
+            this.isLoading.set(false);
+          },
+          error: (error) => {
+            console.error('Registration error:', error);
+            if (error.status === 409) {
+              this.errorMessage.set(
+                'Email already exists. Please use a different email.',
+              );
+            } else if (error.status === 0) {
+              this.errorMessage.set(
+                'Unable to connect to server. Please check your connection.',
+              );
+            } else {
+              this.errorMessage.set(
+                'An error occurred during registration. Please try again.',
+              );
+            }
+            this.isLoading.set(false);
+          },
+        });
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        this.errorMessage.set('An unexpected error occurred');
         this.isLoading.set(false);
       }
     } else {
