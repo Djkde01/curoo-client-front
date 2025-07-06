@@ -1,14 +1,24 @@
 export interface Client {
-  id: string;
+  id?: string | number;
   idType: IdType;
   idNumber: string;
   name: string;
   surname: string;
-  createdAt: Date;
-  updatedAt: Date;
+  firstName?: string; // Keep for backward compatibility
+  lastName?: string; // Keep for backward compatibility
+  email?: string;
+  phoneNumber?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export type IdType = 'passport' | 'nationalId' | 'driversLicense' | 'other';
+export type IdType =
+  | 'CC'
+  | 'CE'
+  | 'passport'
+  | 'nationalId'
+  | 'driversLicense'
+  | 'other';
 
 export interface CreateClientRequest {
   idType: IdType;
@@ -18,12 +28,14 @@ export interface CreateClientRequest {
 }
 
 export interface UpdateClientRequest extends CreateClientRequest {
-  id: string;
+  id: string | number;
 }
 
 export const ID_TYPE_OPTIONS: { value: IdType; label: string }[] = [
-  { value: 'nationalId', label: 'National ID' },
+  { value: 'CC', label: 'Cédula de Ciudadanía (CC)' },
+  { value: 'CE', label: 'Cédula de Extranjería (CE)' },
   { value: 'passport', label: 'Passport' },
+  { value: 'nationalId', label: 'National ID' },
   { value: 'driversLicense', label: "Driver's License" },
   { value: 'other', label: 'Other' },
 ];
