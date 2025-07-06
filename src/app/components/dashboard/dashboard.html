@@ -7,17 +7,38 @@
 
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-    <!-- Actions Bar -->
-    <app-dashboard-actions
-      (addClient)="handleAddClient()"
-    ></app-dashboard-actions>
+    <!-- Error Message -->
+    @if (errorMessage()) {
+      <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div class="flex">
+          <div class="text-red-600 text-sm">
+            {{ errorMessage() }}
+          </div>
+        </div>
+      </div>
+    }
 
-    <!-- Clients List -->
-    <app-client-list
-      [clients]="clients()"
-      (editClient)="handleEditClient($event)"
-      (deleteClient)="handleDeleteClient($event)"
-    ></app-client-list>
+    <!-- Loading State -->
+    @if (isLoading()) {
+      <div class="flex justify-center items-center py-8">
+        <div
+          class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"
+        ></div>
+        <span class="ml-2 text-gray-600">Loading clients...</span>
+      </div>
+    } @else {
+      <!-- Actions Bar -->
+      <app-dashboard-actions
+        (addClient)="handleAddClient()"
+      ></app-dashboard-actions>
+
+      <!-- Clients List -->
+      <app-client-list
+        [clients]="clients()"
+        (editClient)="handleEditClient($event)"
+        (deleteClient)="handleDeleteClient($event)"
+      ></app-client-list>
+    }
   </main>
 
   <!-- Create/Edit Modal -->

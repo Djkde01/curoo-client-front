@@ -102,7 +102,7 @@ import {
               id="name"
               type="text"
               formControlName="name"
-              placeholder="Enter first name"
+              placeholder="Enter name"
               class="w-full h-12 border border-gray-300 rounded-lg px-3 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               [class]="
                 getFieldError('name') ? '!border-red-500 !ring-red-500' : ''
@@ -174,10 +174,12 @@ export class ClientFormComponent {
 
   constructor() {
     this.clientForm = this.fb.group({
-      idType: ['nationalId', [Validators.required]],
+      idType: ['CC', [Validators.required]],
       idNumber: ['', [Validators.required, Validators.minLength(3)]],
       name: ['', [Validators.required, Validators.minLength(2)]],
       surname: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.email]],
+      phoneNumber: [''],
     });
 
     // Update form when editing client changes
@@ -187,11 +189,13 @@ export class ClientFormComponent {
         this.clientForm.patchValue({
           idType: client.idType,
           idNumber: client.idNumber,
-          name: client.name,
-          surname: client.surname,
+          name: client.name || client.firstName, // Backward compatibility
+          surname: client.surname || client.lastName, // Backward compatibility
+          email: client.email || '',
+          phoneNumber: client.phoneNumber || '',
         });
       } else {
-        this.clientForm.reset({ idType: 'nationalId' });
+        this.clientForm.reset({ idType: 'CC' });
       }
     });
   }
@@ -230,6 +234,9 @@ export class ClientFormComponent {
         const requiredLength = field.errors['minlength'].requiredLength;
         return `${this.getFieldLabel(fieldName)} must be at least ${requiredLength} characters`;
       }
+      if (field.errors['email']) {
+        return 'Please enter a valid email address';
+      }
     }
     return null;
   }
@@ -240,6 +247,8 @@ export class ClientFormComponent {
       idNumber: 'ID Number',
       name: 'Name',
       surname: 'Surname',
+      email: 'Email',
+      phoneNumber: 'Phone Number',
     };
     return labels[fieldName] || fieldName;
   }

@@ -68,8 +68,9 @@ import { Client } from '../../../types/client.types';
                 </button>
                 <button
                   type="button"
-                  (click)="deleteClient.emit(client.id)"
-                  class="p-2 text-gray-600 hover:text-red-600 transition-colors"
+                  (click)="deleteClient.emit(client.id!)"
+                  [disabled]="!client.id"
+                  class="p-2 text-gray-600 hover:text-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <svg
                     class="w-4 h-4"
@@ -162,8 +163,9 @@ import { Client } from '../../../types/client.types';
                     </button>
                     <button
                       type="button"
-                      (click)="deleteClient.emit(client.id)"
-                      class="text-red-600 hover:text-red-900 font-medium"
+                      (click)="deleteClient.emit(client.id!)"
+                      [disabled]="!client.id"
+                      class="text-red-600 hover:text-red-900 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Delete
                     </button>
@@ -180,5 +182,5 @@ import { Client } from '../../../types/client.types';
 export class ClientListComponent {
   clients = input.required<Client[]>();
   editClient = output<Client>();
-  deleteClient = output<string>();
+  deleteClient = output<string | number>();
 }
